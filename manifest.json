@@ -1,0 +1,24 @@
+{
+  "name": "衣碳未来",
+  "short_name": "衣碳未来",
+  "description": "校园旧衣回收溯源 - 扫码投递、碳积分、循环商店、全流程溯源",
+  "start_url": "/yitan_app/index.html",
+  "display": "standalone",
+  "background_color": "#F5FBF2",
+  "theme_color": "#7CB342",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "environment"],
+  "scope": "/yitan_app/"
+}
