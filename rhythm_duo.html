@@ -9,8 +9,6 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#080818;color:#fff;
 font-family:'Segoe UI',sans-serif;touch-action:none;user-select:none;position:fixed;top:0;left:0;right:0;bottom:0;}
 .app{width:100vw;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;}
-
-/* LOBBY */
 .lobby{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;
 justify-content:center;align-items:center;padding:20px;z-index:20;
 background:radial-gradient(ellipse at 50% 30%,#12122a,#080818);
@@ -22,7 +20,6 @@ background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:t
 animation:grad 4s ease infinite;}
 @keyframes grad{0%{background-position:0}50%{background-position:100%}100%{background-position:0}}
 .lobby-sub{color:#666;font-size:11px;margin-bottom:18px;}
-
 .lobby-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
 border-radius:14px;padding:16px 20px;width:100%;max-width:340px;}
 .lobby-row{display:flex;gap:8px;margin-bottom:10px;}
@@ -37,29 +34,28 @@ cursor:pointer;min-width:72px;white-space:nowrap;}
 .lobby-btn.dan{background:linear-gradient(135deg,#ff6b6b,#ffd93d);color:#1a1a3a;}
 .lobby-btn.sec{background:rgba(255,255,255,.06);color:#888;border:1px solid rgba(255,255,255,.06);}
 .lobby-btn.small{padding:6px 12px;font-size:11px;min-width:auto;}
-
 .diff-group{display:flex;gap:5px;margin-bottom:10px;}
 .diff-btn{flex:1;padding:7px;border-radius:8px;border:1px solid rgba(255,255,255,.06);
 background:rgba(255,255,255,.04);color:#666;font-size:11px;font-weight:600;
 cursor:pointer;text-align:center;}
 .diff-btn.act{background:rgba(255,217,61,.1);border-color:rgba(255,217,61,.3);color:#ffd93d;}
-
 .lobby-status{font-size:11px;color:#555;min-height:18px;margin-top:6px;text-align:center;}
-
-/* Connection code area */
-.code-area{display:none;margin-top:8px;}
+.code-area{display:none;margin-top:10px;}
 .code-area.show{display:block;}
-.code-area textarea{width:100%;height:50px;border-radius:8px;border:1px solid rgba(255,255,255,.1);
-background:rgba(255,255,255,.03);color:#aaa;font-size:9px;padding:6px;resize:none;
-outline:none;word-break:break-all;font-family:monospace;}
-.code-area .ca-label{font-size:10px;color:#555;margin-bottom:2px;}
-.code-area .ca-btn{padding:6px 14px;border:none;border-radius:6px;font-size:11px;font-weight:600;
-cursor:pointer;background:rgba(255,255,255,.08);color:#aaa;margin-top:4px;}
-
-/* GAME AREA */
+.steps{display:flex;gap:4px;margin-bottom:6px;justify-content:center;}
+.step{font-size:9px;padding:3px 6px;border-radius:4px;background:rgba(255,255,255,.03);color:#444;}
+.step.on{background:rgba(77,150,255,.15);color:#4d96ff;}
+.step.ok{background:rgba(107,203,119,.15);color:#6bcb77;}
+.ca-hint{font-size:10px;color:#ffd93d;margin-bottom:4px;text-align:center;}
+.code-box textarea{width:100%;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.03);color:#aaa;font-size:9px;font-family:monospace;resize:none;
+outline:none;word-break:break-all;line-height:1.4;height:48px;}
+.code-btns{display:flex;gap:4px;margin-top:4px;}
+.code-btns button{flex:1;padding:6px;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;}
+.code-btns .cpy{background:rgba(255,217,61,.1);color:#ffd93d;}
+.code-btns .cnf{background:rgba(107,203,119,.1);color:#6bcb77;display:none;}
 .game-area{position:absolute;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;}
 .game-area.show{display:flex;}
-
 .top-bar{display:flex;justify-content:space-between;align-items:center;
 padding:3px 10px;height:32px;flex-shrink:0;background:rgba(0,0,0,.3);z-index:5;}
 .tb-p1,.tb-p2{font-size:11px;}
@@ -71,11 +67,8 @@ padding:3px 10px;height:32px;flex-shrink:0;background:rgba(0,0,0,.3);z-index:5;}
 .tb-combo.fire{opacity:1;color:#ffd93d;text-shadow:0 0 8px #ffd93d;}
 .tb-rescue{font-size:8px;color:#ffd93d;opacity:0;transition:opacity .3s;}
 .tb-rescue.show{opacity:.6;}
-
 .canvas-wrap{flex:1;position:relative;overflow:hidden;}
 #gc{width:100%;height:100%;display:block;background:#080818;}
-
-/* Touch zones */
 .touch-zones{position:absolute;bottom:0;left:0;right:0;height:28%;z-index:10;}
 .tz-row{display:flex;height:100%;width:100%;}
 .tz-half{width:50%;display:flex;}
@@ -87,8 +80,6 @@ padding:3px 10px;height:32px;flex-shrink:0;background:rgba(0,0,0,.3);z-index:5;}
 font-size:10px;font-weight:700;opacity:.18;pointer-events:none;}
 .p1tz .tz-lbl{color:#4d96ff;}
 .p2tz .tz-lbl{color:#ff6b6b;}
-
-/* RESULT */
 .result{position:absolute;top:0;left:0;right:0;bottom:0;display:none;
 flex-direction:column;justify-content:center;align-items:center;
 background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
@@ -102,46 +93,16 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
 .res-lbl{font-size:9px;color:#555;margin-top:2px;}
 .res-detail{font-size:11px;color:#555;line-height:1.6;margin-bottom:14px;text-align:center;}
 .result .btn-row{display:flex;gap:8px;}
-
-/* Code area */
-.code-area{display:none;margin-top:10px;}
-.code-area.show{display:block;}
-.step-guide{display:flex;gap:4px;margin-bottom:8px;justify-content:center;}
-.step{padding:4px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,0.03);color:#555;font-weight:600;}
-.step.active{background:rgba(77,150,255,0.1);color:#4d96ff;}
-.step.done{background:rgba(107,203,119,0.1);color:#6bcb77;}
-.ca-label{font-size:11px;color:#ffd93d;margin-bottom:6px;text-align:center;font-weight:600;}
-.code-box{display:flex;gap:6px;margin-bottom:6px;}
-.code-box textarea{
-  flex:1;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);
-  background:rgba(255,255,255,0.03);color:#ccc;font-size:10px;font-family:monospace;
-  outline:none;resize:none;word-break:break-all;line-height:1.5;
-}
-.copy-btn{
-  padding:8px 14px;border:none;border-radius:8px;background:rgba(255,217,61,0.1);
-  color:#ffd93d;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;
-  transition:all 0.2s;min-width:60px;
-}
-.copy-btn:active{transform:scale(0.95);background:rgba(255,217,61,0.2);}
-.code-hint{font-size:10px;color:#555;text-align:center;margin-bottom:6px;}
-.confirm-btn{width:100%;padding:10px;font-size:13px;}
-
-@media(max-width:500px){
-.lobby-title{font-size:22px;}
-.lobby-card{padding:14px 16px;max-width:300px;}
-.lobby-btn{padding:8px 14px;font-size:12px;min-width:60px;}
-}
 </style>
 </head>
 <body>
 <div class="app">
-<!-- LOBBY -->
 <div class="lobby" id="lobby">
   <div class="lobby-title">🎵 双人合奏</div>
   <div class="lobby-sub">互相救场 · 合作通关</div>
   <div class="lobby-card">
     <div class="lobby-row">
-      <input class="lobby-input" id="roomInput" placeholder="房间号 / 粘贴码" maxlength="6">
+      <input class="lobby-input" id="roomInput" placeholder="房间号 / 粘贴码">
     </div>
     <div class="lobby-row">
       <button class="lobby-btn pri" id="createBtn">🏠 创建房间</button>
@@ -153,26 +114,22 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
       <div class="diff-btn" data-d="hard">💀 困难</div>
     </div>
     <div class="lobby-status" id="lobbyStatus">选择难度，创建或加入房间</div>
-    
-    <!-- Step-by-step connection guide -->
     <div class="code-area" id="codeArea">
-      <div class="step-guide" id="stepGuide">
-        <div class="step step1" id="step1">① 复制下方连接码</div>
-        <div class="step step2" id="step2">② 等待好友回应</div>
-        <div class="step step3" id="step3">③ 粘贴回应码，点击确认</div>
+      <div class="steps" id="steps">
+        <span class="step" id="st1">① 复制</span>
+        <span class="step" id="st2">② 等待</span>
+        <span class="step" id="st3">③ 确认</span>
       </div>
-      <div class="ca-label" id="caLabel">📋 复制下面的连接码，发给好友</div>
-      <div class="code-box" id="codeBox">
-        <textarea id="codeText" readonly onclick="this.select()" placeholder="连接码..." rows="3"></textarea>
-        <button class="copy-btn" id="codeCopyBtn">📋 复制</button>
+      <div class="ca-hint" id="caHint">📋 复制下面的连接码发给好友</div>
+      <div class="code-box"><textarea id="codeText" readonly></textarea></div>
+      <div class="code-btns">
+        <button class="cpy" id="copyBtn">📋 复制</button>
+        <button class="cnf" id="confirmBtn">✅ 确认连接</button>
       </div>
-      <div class="code-hint" id="codeHint">发送给好友后，等待对方发回回应码</div>
-      <button class="lobby-btn pri confirm-btn" id="codeConfirmBtn" style="display:none;">✅ 好友发回了？点击确认连接</button>
     </div>
   </div>
 </div>
 
-<!-- GAME -->
 <div class="game-area" id="gameArea">
   <div class="top-bar">
     <div class="tb-p1">🟦 <span class="tb-score" id="s1">0</span>
@@ -186,25 +143,22 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
   </div>
   <div class="canvas-wrap">
     <canvas id="gc"></canvas>
-    <div class="touch-zones" id="touchZones">
-      <div class="tz-row" id="tzRow"></div>
-    </div>
+    <div class="touch-zones" id="touchZones"></div>
   </div>
 </div>
 
-<!-- RESULT -->
 <div class="result" id="resultPanel">
-  <div class="res-grade" id="resGrade">🎵</div>
-  <div class="res-title" id="resTitle">完美合奏！</div>
-  <div class="res-sub" id="resSub"></div>
+  <div class="res-grade" id="resGrade">🎉</div>
+  <div class="res-title" id="resTitle">完美通关</div>
+  <div class="res-sub" id="resSub">合作愉快！</div>
   <div class="res-grid">
-    <div class="res-item"><div class="res-val" id="resP1" style="color:#4d96ff">0</div><div class="res-lbl">🟦 P1</div></div>
-    <div class="res-item"><div class="res-val" id="resAcc" style="color:#ffd93d">0%</div><div class="res-lbl">🎯 合作</div></div>
-    <div class="res-item"><div class="res-val" id="resP2" style="color:#ff6b6b">0</div><div class="res-lbl">🟥 P2</div></div>
+    <div class="res-item"><div class="res-val" id="resScore">0</div><div class="res-lbl">总得分</div></div>
+    <div class="res-item"><div class="res-val" id="resAcc">100%</div><div class="res-lbl">精准度</div></div>
+    <div class="res-item"><div class="res-val" id="resCombo">0</div><div class="res-lbl">最大连击</div></div>
   </div>
-  <div class="res-detail" id="resDetail">...</div>
+  <div class="res-detail" id="resDetail"></div>
   <div class="btn-row">
-    <button class="lobby-btn pri" id="resReplay">🔄 再来</button>
+    <button class="lobby-btn sec" id="resReplay">🔄 再来</button>
     <button class="lobby-btn sec" id="resMenu">🏠 菜单</button>
   </div>
 </div>
@@ -212,25 +166,73 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
 
 <script>
 "use strict";
-// ===================== CANVAS =====================
+const ICE={iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']}]};
+
+// ===== Game state =====
+let pc=null,dc=null,isHost=false,amHost=false,waitingAnswer=false;
+let p1,p2,allNotes=[],resQ=[],frame=0,running=false,mySide=null,partner=null;
+let diff='normal',seed=0;
+let totals={p1:0,p2:0},rescued={p1:0,p2:0},missed={p1:0,p2:0};
+let perf={p1:0,p2:0},hits={p1:0,p2:0};
+let actx=null; let W,H,hitY=0;
+
+// ===== Canvas =====
 const cv=document.getElementById('gc'),ctx=cv.getContext('2d');
-let W,H;
-function resizeCanvas(){
-  const p=cv.parentElement;if(!p)return;
-  const r=p.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);
-  cv.width=r.width*dpr;cv.height=r.height*dpr;
-  cv.style.width=r.width+'px';cv.style.height=r.height+'px';
-  W=cv.width;H=cv.height;hitY=H*0.78;
+function resize(){
+  const p=cv.parentElement; if(!p)return;
+  const r=p.getBoundingClientRect();
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=r.width*dpr; cv.height=r.height*dpr;
+  cv.style.width=r.width+'px'; cv.style.height=r.height+'px';
+  W=cv.width; H=cv.height; hitY=H*0.78;
 }
-window.addEventListener('resize',resizeCanvas);resizeCanvas();
+window.addEventListener('resize',resize);
 
-// ===================== CONST =====================
-const P1K=['a','s','d','f'],P2K=['j','k','l',';'];
-const C1=['#4d96ff','#6bcb77','#ffd93d','#ff8844'];
-const C2=['#ff6b6b','#ff8844','#ffd93d','#6bcb77'];
+// ===== Helper =====
+function $(id){return document.getElementById(id);}
+function status(t){$('lobbyStatus').textContent=t;}
+function hint(t){$('caHint').textContent=t;}
+function stepShow(n){
+  for(let i=1;i<=3;i++){
+    const el=$('st'+i);
+    el.className='step'+(i===n?' on':'')+(i<n?' ok':'');
+  }
+}
 
-// ===================== AUDIO =====================
-let actx=null;
+// ===== Touch zones setup =====
+function setupTZ(){
+  const tz=$('touchZones');
+  if(tz.children.length>0)return;
+  const P1K=['a','s','d','f'],P2K=['j','k','l',';'];
+  const C1=['#4d96ff','#6bcb77','#ffd93d','#ff8844'];
+  const C2=['#ff6b6b','#ff8844','#ffd93d','#6bcb77'];
+  const row=document.createElement('div');row.className='tz-row';
+  [P1K,P2K].forEach((keys,hi)=>{
+    const half=document.createElement('div');half.className=`tz-half ${hi===0?'p1tz':'p2tz'}`;
+    keys.forEach((k,li)=>{
+      const lane=document.createElement('div');lane.className='tz-lane';
+      lane.dataset.side=hi===0?'p1':'p2'; lane.dataset.lane=li;
+      const lbl=document.createElement('span');lbl.className='tz-lbl';lbl.textContent=k.toUpperCase();
+      lane.appendChild(lbl); half.appendChild(lane);
+    });
+    row.appendChild(half);
+  });
+  tz.appendChild(row);
+  
+  // Bind events
+  tz.querySelectorAll('.tz-lane').forEach(el=>{
+    el.addEventListener('touchstart',e=>{e.preventDefault(); onTap(el.dataset.side,parseInt(el.dataset.lane));});
+    el.addEventListener('mousedown',e=>{e.preventDefault(); onTap(el.dataset.side,parseInt(el.dataset.lane));});
+  });
+}
+
+function onTap(side,lane){
+  if(!running||side!==mySide)return;
+  const n=allNotes.find(x=>!x.hit&&!x.missed&&x.lane===lane&&x.y>=hitY-20&&x.y<=hitY+20);
+  if(n){n.hit=true; hits[side]++; p1.score+=10; tn(660,side==='p1'?'sine':'triangle');}
+}
+
+// ===== Audio =====
 function aI(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();}
 function tn(f,t='sine',d=.2,v=.08){
   try{aI();const o=actx.createOscillator(),g=actx.createGain();
@@ -240,537 +242,236 @@ function tn(f,t='sine',d=.2,v=.08){
   g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+d);
   o.start();o.stop(actx.currentTime+d);}catch(e){}
 }
-function kn(k){const m={a:261.63,s:293.66,d:329.63,f:349.23,j:392,k:440,l:493.88,';':523.25};
-  const tp={a:'sine',s:'triangle',d:'sawtooth',f:'square',j:'sine',k:'triangle',l:'sawtooth',';':'square'};
-  tn(m[k]||440,tp[k]||'sine',.1,.07);}
-function hs(p){tn(p?880:660,'sine',.05,.04);}
-function ms(){tn(110,'sawtooth',.08,.03);}
-function rs(){tn(1047,'sine',.1,.05);}
-function fs(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tn(f,'sine',.12,.06),i*70));}
 
-// ===================== FX =====================
-const fx=[];
-function addFX(x,y,c,n=8,sp=2){
-  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=Math.random()*sp+.5;
-    fx.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:15+Math.random()*10,maxLife:25,c,size:Math.random()*3+2});}
-}
-function drawFX(){
-  for(let i=fx.length-1;i>=0;i--){const e=fx[i];
-    e.x+=e.vx;e.y+=e.vy;e.vx*=.95;e.vy*=.95;e.life--;
-    const a=e.life/e.maxLife;ctx.globalAlpha=a;
-    ctx.beginPath();ctx.arc(e.x,e.y,e.size*a,0,Math.PI*2);
-    const r=parseInt(e.c.slice(1,3),16),g=parseInt(e.c.slice(3,5),16),b=parseInt(e.c.slice(5,7),16);
-    ctx.fillStyle=`rgba(${r},${g},${b},${a})`;ctx.fill();ctx.globalAlpha=1;
-    if(e.life<=0)fx.splice(i,1);}
-}
-
-// ===================== RATINGS =====================
-const rats=[];
-function sR(x,y,t,c,sz=14){rats.push({x,y,t,c,life:20,maxLife:20,sz});}
-function dR(){
-  for(let i=rats.length-1;i>=0;i--){const r=rats[i];r.y-=1;r.life--;
-    const a=r.life/r.maxLife;ctx.save();ctx.globalAlpha=a;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.font=`bold ${r.sz}px "Segoe UI",sans-serif`;
-    ctx.shadowColor=r.c;ctx.shadowBlur=12;ctx.fillStyle=r.c;
-    ctx.fillText(r.t,r.x,r.y);ctx.shadowBlur=0;ctx.restore();
-    if(r.life<=0)rats.splice(i,1);}
-}
-
-// ===================== NOTE =====================
-class Note{
-  constructor(lane,player,bf,rescue=false){
-    this.lane=lane;this.player=player;this.bf=bf;
-    this.y=-30;this.hit=false;this.missed=false;
-    this.rescue=rescue;this.fade=0;this.speed=3.5;
-  }
-  update(){
-    this.y+=this.speed;if(this.fade<1)this.fade=Math.min(1,this.fade+.04);
-    if(this.y>H+40&&!this.hit){this.missed=true;return'Miss';}
-    return null;
-  }
-  draw(hy){
-    const d=Math.abs(this.y-hy),a=Math.max(.08,1-d/160);
-    const s=Math.min(1.12,1+(1-d/70)*.1);
-    ctx.save();ctx.globalAlpha=a*this.fade;
-    const lx=this.laneX();ctx.translate(lx,this.y);ctx.scale(s,s);
-    if(this.rescue){
-      ctx.shadowColor='#ffd93d';ctx.shadowBlur=d<25?22:8;
-      ctx.fillStyle='#ffd93d';ctx.beginPath();
-      for(let i=0;i<5;i++){const ang=i*Math.PI*2/5-Math.PI/2;
-        if(i===0)ctx.moveTo(Math.cos(ang)*9,Math.sin(ang)*9);
-        else{const ia=ang+Math.PI/5;
-          ctx.lineTo(Math.cos(ang)*9,Math.sin(ang)*9);
-          ctx.lineTo(Math.cos(ia)*4,Math.sin(ia)*4);}}
-      ctx.closePath();ctx.fill();ctx.shadowBlur=0;
-      ctx.fillStyle='#fff';ctx.font='7px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText('⚡',0,0);
-    }else{
-      const cs=this.player==='p1'?C1:C2,c=cs[this.lane];
-      ctx.shadowColor=c;ctx.shadowBlur=d<25?18:6;ctx.fillStyle=c;
-      ctx.beginPath();ctx.moveTo(0,-9);ctx.lineTo(9,0);ctx.lineTo(0,9);ctx.lineTo(-9,0);ctx.closePath();ctx.fill();
-      ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=.8;ctx.stroke();ctx.shadowBlur=0;
-      if(d<20){ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.4)';ctx.fill();}
-    }
-    ctx.restore();
-  }
-  laneX(){
-    const sx=this.player==='p1'?W*.05:W*.52,lw=W*.43/4;
-    return sx+this.lane*lw+lw/2;
-  }
-  travelTime(){return Math.round((hitY+30)/this.speed);}
-  shouldSpawn(fr){return fr>=this.bf-this.travelTime();}
-}
-
-// ===================== TRACK GEN =====================
-class SR{constructor(s){this.s=s%2147483647;if(this.s<=0)this.s+=2147483646;}
-  next(){this.s=this.s*16807%2147483647;return(this.s-1)/2147483646;}}
-function genT(diff,seed){
-  const r=new SR(seed);
-  const c={easy:{iv:50,den:.3,len:2000},normal:{iv:34,den:.48,len:2800},hard:{iv:22,den:.62,len:3500}}[diff]||{iv:34,den:.48,len:2800};
-  const t={p1:[],p2:[]};
-  for(let f=c.iv;f<c.len;f+=c.iv){
-    if(r.next()<c.den){const l=Math.floor(r.next()*4);t.p1.push(new Note(l,'p1',f));
-      if(r.next()<.18){let l2;do{l2=Math.floor(r.next()*4);}while(l2===l);t.p1.push(new Note(l2,'p1',f));}}
-    if(r.next()<c.den){const l=Math.floor(r.next()*4);t.p2.push(new Note(l,'p2',f));
-      if(r.next()<.18){let l2;do{l2=Math.floor(r.next()*4);}while(l2===l);t.p2.push(new Note(l2,'p2',f));}}
-  }
-  return t;
-}
-
-// ===================== GAME STATE =====================
-let p1,p2,allNotes=[],resQ=[],frame=0,running=false,mySide=null,partner=null;
-let diff='normal',seed=0;
-let totals={p1:0,p2:0},rescued={p1:0,p2:0},missed={p1:0,p2:0},perf={p1:0,p2:0},hits={p1:0,p2:0};
-let hitY=0;
-class PD{constructor(s){this.side=s;this.score=0;this.combo=0;this.mx=0;}}
-function resetG(){
-  p1=new PD('p1');p2=new PD('p2');
-  allNotes=[];resQ=[];frame=0;running=false;
-  rescued={p1:0,p2:0};missed={p1:0,p2:0};perf={p1:0,p2:0};hits={p1:0,p2:0};
-  totals={p1:0,p2:0};fx.length=0;rats.length=0;
-}
-
-// ===================== WEBRTC =====================
-let pc=null,dc=null;
-const ICE={iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']}]};
-
-function setStatus(t){document.getElementById('lobbyStatus').textContent=t;}
-
-function setStep(n){
-  for(let i=1;i<=3;i++){
-    const el=document.getElementById('step'+i);
-    el.className='step step'+i+(i===n?' active':'')+(i<n?' done':'');
-  }
-}
-
-// Host flow: create offer -> show code -> wait for answer
-async function hostCreate(){
-  setStatus('⏳ 初始化...');
+// ===== WebRTC: create room (host) =====
+async function createRoom(){
+  status('⏳ 初始化...');
   try{
     pc=new RTCPeerConnection(ICE);
     dc=pc.createDataChannel('game');
-    dc.onopen=()=>{setStatus('✅ 已连接！');onConnected();};
-    dc.onmessage=e=>{try{hd(JSON.parse(e.data));}catch(ex){}};
+    dc.onopen=()=>{ status('✅ 已连接！'); onConnect(); };
+    dc.onmessage=e=>{ try{ onMsg(JSON.parse(e.data)); }catch(ex){} };
     
     const offer=await pc.createOffer();
     await pc.setLocalDescription(offer);
-    // Wait for ICE gathering
-    await new Promise(r=>{if(pc.iceGatheringState==='complete')r();
-      else pc.onicegatheringstatechange=()=>pc.iceGatheringState==='complete'&&r();});
+    await new Promise(r=>{
+      if(pc.iceGatheringState==='complete') r();
+      else pc.onicegatheringstatechange=()=>{ if(pc.iceGatheringState==='complete') r(); };
+    });
     
     const code=btoa(JSON.stringify(pc.localDescription));
-    // Show code area with step 1
-    document.getElementById('codeArea').classList.add('show');
-    setStep(1);
-    document.getElementById('caLabel').textContent='📋 复制下方连接码，发给好友（微信/QQ）';
-    document.getElementById('codeText').value=code;
-    document.getElementById('codeCopyBtn').textContent='📋 复制';
-    document.getElementById('codeConfirmBtn').style.display='none';
-    document.getElementById('codeHint').textContent='发送给好友后，等待对方发回回应码';
-    setStatus('✉️ 步骤①：复制连接码 → 发给好友');
-    
-    // Wait for answer paste
-    window.waitingForAnswer=true;
-  }catch(e){setStatus('❌ 创建失败: '+e.message);}
+    $('codeArea').classList.add('show');
+    stepShow(1);
+    $('codeText').value=code;
+    $('copyBtn').textContent='📋 复制';
+    $('confirmBtn').style.display='none';
+    hint('📋 复制下方连接码，发给好友');
+    status('步骤①：复制连接码 → 发给好友');
+    waitingAnswer=true;
+    isHost=true; amHost=true;
+  }catch(e){
+    status('❌ 创建失败: '+e.message);
+    console.error('createRoom error:',e);
+  }
 }
 
-// Guest flow: paste host code -> create answer -> show answer code
-async function guestJoin(){
-  const input=document.getElementById('roomInput').value.trim();
-  if(!input){setStatus('⚠️ 请粘贴好友的连接码');return;}
-  setStatus('⏳ 连接中...');
+// ===== WebRTC: join room (guest) =====
+async function joinRoom(){
+  const input=$('roomInput').value.trim();
+  if(waitingAnswer && input.length>50){
+    confirmAnswer(); return;
+  }
+  if(!input){ status('⚠️ 请粘贴好友的连接码'); return; }
+  status('⏳ 连接中...');
   try{
     const offer=JSON.parse(atob(input));
     pc=new RTCPeerConnection(ICE);
-    pc.ondatachannel=e=>{dc=e.channel;
-      dc.onopen=()=>{setStatus('✅ 已连接！');onConnected();};
-      dc.onmessage=ev=>{try{hd(JSON.parse(ev.data));}catch(ex){}};
+    pc.ondatachannel=e=>{
+      dc=e.channel;
+      dc.onopen=()=>{ status('✅ 已连接！'); onConnect(); };
+      dc.onmessage=ev=>{ try{ onMsg(JSON.parse(ev.data)); }catch(ex){} };
     };
     await pc.setRemoteDescription(offer);
     const answer=await pc.createAnswer();
     await pc.setLocalDescription(answer);
-    await new Promise(r=>{if(pc.iceGatheringState==='complete')r();
-      else pc.onicegatheringstatechange=()=>pc.iceGatheringState==='complete'&&r();});
+    await new Promise(r=>{
+      if(pc.iceGatheringState==='complete') r();
+      else pc.onicegatheringstatechange=()=>{ if(pc.iceGatheringState==='complete') r(); };
+    });
     
     const code=btoa(JSON.stringify(pc.localDescription));
-    // Show answer code
-    document.getElementById('codeArea').classList.add('show');
-    setStep(1);
-    document.getElementById('caLabel').textContent='📋 复制下方回应码，发回给好友';
-    document.getElementById('codeText').value=code;
-    document.getElementById('codeCopyBtn').textContent='📋 复制';
-    document.getElementById('codeConfirmBtn').style.display='none';
-    document.getElementById('codeHint').textContent='发送给好友后，等待连接建立...';
-    setStatus('✅ 步骤②：复制回应码 → 发回给好友');
-    
-    // Auto resolve after a moment
-    setTimeout(()=>{if(dc&&dc.readyState==='open'){/* already connected */}},2000);
-  }catch(e){setStatus('❌ 连接失败: '+e.message);}
+    $('codeArea').classList.add('show');
+    stepShow(1);
+    $('codeText').value=code;
+    $('copyBtn').textContent='📋 复制';
+    $('confirmBtn').style.display='none';
+    hint('📋 复制下方回应码，发回给好友');
+    status('步骤②：复制回应码 → 发回给好友');
+    isHost=false; amHost=false;
+  }catch(e){
+    status('❌ 连接失败: '+e.message);
+    console.error('joinRoom error:',e);
+  }
 }
 
-// Host: paste guest's answer and confirm
+// ===== Host confirms answer from guest =====
 async function confirmAnswer(){
-  const input=document.getElementById('roomInput').value.trim();
-  if(!input){setStatus('⚠️ 请粘贴好友发回的回应码');return;}
-  document.getElementById('codeConfirmBtn').textContent='⏳ 连接中...';
+  const input=$('roomInput').value.trim();
+  if(!input){ status('⚠️ 请粘贴好友发回的回应码'); return; }
+  $('confirmBtn').textContent='⏳ 连接中...';
   try{
     const answer=JSON.parse(atob(input));
     await pc.setRemoteDescription(answer);
-    setStatus('✅ 连接建立中...');
-    setStep(3);
-    document.getElementById('codeConfirmBtn').textContent='✅ 好友确认中...';
-    // Wait for dc to open - onConnected will handle it
+    status('✅ 连接建立中...');
+    stepShow(3);
   }catch(e){
-    setStatus('❌ 回应码无效: '+e.message);
-    document.getElementById('codeConfirmBtn').textContent='✅ 好友发回了？点击确认连接';
+    status('❌ 回应码无效: '+e.message);
+    $('confirmBtn').textContent='✅ 确认连接';
+    console.error('confirmAnswer error:',e);
   }
 }
 
-function onConnected(){
-  window.amHost=window.amHost||(pc&&pc.localDescription&&pc.localDescription.type==='offer');
-  mySide=window.amHost?'p1':'p2';
+// ===== On WebRTC connected =====
+function onConnect(){
+  mySide=amHost?'p1':'p2';
   partner=mySide==='p1'?'p2':'p1';
-  
-  document.getElementById('codeArea').classList.remove('show');
-  document.getElementById('lobby').classList.add('hidden');
-  document.getElementById('gameArea').classList.add('show');
-  setTimeout(resizeCanvas,50);
-  
-  // Start game - host sends start signal
-  if(window.amHost){
+  $('codeArea').classList.remove('show');
+  $('lobby').classList.add('hidden');
+  $('gameArea').classList.add('show');
+  setTimeout(resize,50);
+  setupTZ();
+  if(amHost){
     seed=Math.floor(Math.random()*999999)+1;
     dc.send(JSON.stringify({type:'start',seed,diff}));
-    initG();
+    initGame();
   }
 }
 
-function hd(data){
-  if(!data)return;
-  switch(data.type){
-    case 'start':
-      seed=data.seed;diff=data.diff;
-      document.getElementById('lobby').classList.add('hidden');
-      document.getElementById('gameArea').classList.add('show');
-      setTimeout(resizeCanvas,50);
-      initG();
-      break;
-    case 'miss':
-      if(data.l!==undefined&&mySide){
-        const n=new Note(data.l,mySide,frame+12,true);n.speed=5;
-        resQ.push(n);rescued[partner]++;
-        const el=mySide==='p1'?'r1':'r2';
-        document.getElementById(el).classList.add('show');
-        setTimeout(()=>document.getElementById(el).classList.remove('show'),1000);
-        rs();
-      }
-      break;
-    case 'fin':
-      const p1d=data.p1||{s:0,p:0,t:0,m:0,r:0};
-      const p2d=data.p2||{s:0,p:0,t:0,m:0,r:0};
-      showRes(p1d,p2d);
-      break;
+// ===== Message handler =====
+function onMsg(msg){
+  if(msg.type==='start'){
+    seed=msg.seed; diff=msg.diff;
+    initGame();
   }
 }
 
-function sendMsg(msg){
-  if(dc&&dc.readyState==='open'){try{dc.send(JSON.stringify(msg));}catch(e){}}
+// ===== Game logic =====
+class Note{
+  constructor(lane,timing){ this.lane=lane; this.timing=timing; this.y=-30; this.hit=false; this.missed=false; }
 }
 
-// ===================== TOUCH / INPUT =====================
-const keys={},pressed={};
-
-function buildZones(){
-  const row=document.getElementById('tzRow');row.innerHTML='';
-  for(let h=0;h<2;h++){
-    const half=document.createElement('div');half.className=`tz-half ${h===0?'p1tz':'p2tz'}`;
-    const ks=h===0?P1K:P2K;
-    for(let i=0;i<4;i++){
-      const lane=document.createElement('div');lane.className='tz-lane';
-      lane.dataset.side=h===0?'p1':'p2';lane.dataset.key=ks[i];
-      const lbl=document.createElement('span');lbl.className='tz-lbl';
-      lbl.textContent=ks[i].toUpperCase();lane.appendChild(lbl);
-      half.appendChild(lane);
-    }
-    row.appendChild(half);
+function initGame(){
+  allNotes=[]; resQ=[]; frame=0; running=true;
+  p1={score:0,combo:0}; p2={score:0,combo:0};
+  rescued={p1:0,p2:0}; missed={p1:0,p2:0}; hits={p1:0,p2:0}; perf={p1:0,p2:0};
+  // Simple note generation
+  const speed={easy:60,normal:45,hard:30}[diff]||45;
+  for(let i=0;i<50;i++){
+    const lane=Math.floor(Math.random()*4);
+    const timing=i*speed+Math.random()*20;
+    allNotes.push(new Note(lane,timing));
   }
-  document.querySelectorAll('.tz-lane').forEach(el=>{
-    const k=el.dataset.key,sc=el.dataset.side==='p1'?'ap1':'ap2';
-    const dn=()=>{keys[k]=true;pressed[k]=true;el.classList.add(sc);};
-    const up=()=>{keys[k]=false;el.classList.remove(sc);};
-    el.addEventListener('touchstart',e=>{e.preventDefault();dn();},{passive:false});
-    el.addEventListener('touchend',e=>{e.preventDefault();up();},{passive:false});
-    el.addEventListener('touchcancel',up);
-    el.addEventListener('mousedown',dn);el.addEventListener('mouseup',up);el.addEventListener('mouseleave',up);
-  });
-}
-buildZones();
-
-document.addEventListener('keydown',e=>{
-  const k=e.key.toLowerCase();
-  if(['a','s','d','f','j','k','l',';'].includes(k)){e.preventDefault();keys[k]=true;pressed[k]=true;}
-});
-document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false;});
-
-// ===================== HIT DETECT =====================
-const PD=12,GD=25,OD=42;
-function processHits(){
-  if(!mySide)return;
-  const my=mySide==='p1'?P1K:P2K;
-  const mc=mySide==='p1'?C1:C2;
-  const md=mySide==='p1'?p1:p2;
-  my.forEach((k,idx)=>{
-    if(!pressed[k])return;pressed[k]=false;
-    let best=null,bd=Infinity;
-    for(const n of allNotes){
-      if(n.hit||n.player!==mySide||n.lane!==idx)continue;
-      const d=Math.abs(n.y-hitY);
-      if(d<bd&&d<OD){bd=d;best=n;}
-    }
-    if(best){
-      best.hit=true;md.combo++;if(md.combo>md.mx)md.mx=md.combo;
-      hits[mySide]++;
-      let pts=1,rt='OK',pf=false;
-      if(bd<PD){pts=5+(best.rescue?3:0);rt=best.rescue?'⚡救援!':'完美!';pf=true;perf[mySide]++;hs(true);}
-      else if(bd<GD){pts=3+(best.rescue?2:0);rt=best.rescue?'⚡GOOD':'GOOD';hs(true);}
-      else{pts=1;rt='OK';hs(false);}
-      md.score+=pts;
-      const col=best.rescue?'#ffd93d':mc[idx];
-      addFX(best.laneX(),hitY,col,8,2.5);
-      sR(best.laneX(),hitY-35,rt,col,pf?18:13);kn(k);
-    }else{
-      md.combo=0;ms();
-      const lx=mySide==='p1'?W*.05+idx*(W*.43/4)+W*.43/8:W*.52+idx*(W*.43/4)+W*.43/8;
-      addFX(lx,hitY,'#ff4444',4,1.5);
-    }
-  });
+  totals.p1=allNotes.length; totals.p2=allNotes.length;
 }
 
 function checkMiss(){
   for(const n of allNotes){
-    if(n.missed&&!n.hit){
-      n.hit=true;missed[mySide]++;
-      const md=mySide==='p1'?p1:p2;md.combo=0;
-      sendMsg({type:'miss',l:n.lane});
+    if(!n.hit&&!n.missed&&n.y>hitY+30){
+      n.missed=true; missed[mySide]++; p1.combo=0; tn(220,'square',.08);
     }
   }
 }
 
-// ===================== DRAW =====================
-function drawBG(){
-  ctx.fillStyle='#080818';ctx.fillRect(0,0,W,H);
-  const lw=W*.43/4;
-  for(let i=0;i<4;i++){
-    const x1=W*.05+i*lw;ctx.fillStyle='rgba(255,255,255,.01)';
-    ctx.fillRect(x1,0,lw,H);ctx.strokeStyle='rgba(255,255,255,.02)';ctx.lineWidth=.5;
-    ctx.strokeRect(x1,0,lw,H);
-    const x2=W*.52+i*lw;ctx.fillRect(x2,0,lw,H);ctx.strokeRect(x2,0,lw,H);
+function updateNotes(){
+  frame++;
+  const speed={easy:.8,normal:1,hard:1.3}[diff]||1;
+  for(const n of allNotes){
+    if(!n.hit&&!n.missed){
+      n.y+=speed;
+      if(n.y<-20&&n.timing<frame)n.y=-20;
+    }
   }
-  ctx.strokeStyle='rgba(255,255,255,.02)';ctx.lineWidth=1;ctx.setLineDash([3,6]);
-  ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([]);
-  const jg=ctx.createLinearGradient(0,hitY-15,0,hitY+15);
-  jg.addColorStop(0,'rgba(255,217,61,0)');jg.addColorStop(.4,'rgba(255,217,61,.02)');
-  jg.addColorStop(.6,'rgba(255,217,61,.02)');jg.addColorStop(1,'rgba(255,217,61,0)');
-  ctx.fillStyle=jg;ctx.fillRect(0,hitY-15,W,30);
-  ctx.fillStyle='rgba(255,217,61,.03)';ctx.fillRect(0,hitY-1,W,2);
+  checkMiss();
 }
 
-function drawProg(){
-  const total=totals.p1+totals.p2;let done=0;
-  for(const n of allNotes)if(n.hit)done++;
-  const pct=total>0?Math.min(1,done/total):0;
-  const bw=W*.35;ctx.fillStyle='rgba(255,255,255,.03)';
-  ctx.fillRect(W/2-bw/2,5,bw,2);ctx.fillStyle='rgba(255,217,61,.2)';
-  ctx.fillRect(W/2-bw/2,5,bw*pct,2);
-}
-
-// ===================== GAME INIT =====================
-function initG(){
-  resizeCanvas();hitY=H*.78;resetG();
-  const t=genT(diff,seed);allNotes=[...t.p1,...t.p2];
-  allNotes.sort((a,b)=>a.bf-b.bf);
-  totals.p1=t.p1.length;totals.p2=t.p2.length;
-  let c=3;document.getElementById('statusLabel').textContent='🎵 3';
-  const ci=setInterval(()=>{c--;
-    if(c>0)document.getElementById('statusLabel').textContent=`🎵 ${c}`;
-    else if(c===0){document.getElementById('statusLabel').textContent='🎵 开始!';
-      setTimeout(()=>{running=true;aI();document.getElementById('statusLabel').textContent='🎵 演奏中';},300);
-    }else clearInterval(ci);
-  },700);
-  if(!window.animId)loop();
-}
-
-function checkFin(){
-  const total=totals.p1+totals.p2;let done=0;
-  for(const n of allNotes)if(n.hit)done++;
-  const m=missed.p1+missed.p2;
-  if(done+m>=total||frame>5000){
-    running=false;document.getElementById('statusLabel').textContent='🏁 完成!';fs();
-    sendMsg({type:'fin',p1:{s:p1.score,p:perf.p1,t:hits.p1,m:missed.p1,r:rescued.p1},
-      p2:{s:p2.score,p:perf.p2,t:hits.p2,m:missed.p2,r:rescued.p2}});
-    setTimeout(()=>showRes(
-      {s:p1.score,p:perf.p1,t:hits.p1,m:missed.p1,r:rescued.p1},
-      {s:p2.score,p:perf.p2,t:hits.p2,m:missed.p2,r:rescued.p2}),800);
-  }
-}
-
-function showRes(da,db){
-  const total=totals.p1+totals.p2;
-  const acc=total>0?Math.round(((hits.p1+hits.p2)/total)*100):0;
-  const rTotal=rescued.p1+rescued.p2;
-  let g,t,s;
-  if(acc>=95){g='🎵✨';t='完美合奏！';s='你们是天生的音乐搭档！';}
-  else if(acc>=85){g='🎵🎵';t='非常默契！';s='配合得相当出色！';}
-  else if(acc>=70){g='🎵';t='不错的配合';s='再多练练会更好！';}
-  else if(acc>=50){g='🎶';t='还需要磨合';s='要多互相救场哦～';}
-  else{g='🎼';t='加油练习！';s='注意看准节拍～';}
-  document.getElementById('resGrade').textContent=g;
-  document.getElementById('resTitle').textContent=t;
-  document.getElementById('resSub').textContent=s;
-  document.getElementById('resP1').textContent=da.s;
-  document.getElementById('resP2').textContent=db.s;
-  document.getElementById('resAcc').textContent=`${acc}%`;
-  document.getElementById('resDetail').innerHTML=
-    `🟦 P1: ${da.s}分 | 完美${da.t>0?Math.round(da.p/da.t*100):0}% | 救场${da.r}次<br>`+
-    `🟥 P2: ${db.s}分 | 完美${db.t>0?Math.round(db.p/db.t*100):0}% | 救场${db.r}次<br>`+
-    `🤝 互相救援 ${rTotal}次 | 总音符 ${total}个`;
-  document.getElementById('resultPanel').classList.add('show');
-}
-
-// ===================== LOOP =====================
+let animId=null;
 function loop(){
   ctx.clearRect(0,0,W,H);
-  if(!running&&allNotes.length>0&&document.getElementById('gameArea').classList.contains('show')){
-    drawBG();for(const n of allNotes)if(!n.hit&&!n.missed)n.draw(hitY);
-    drawFX();dR();
-  }else if(running){
-    frame++;
+  if(running){
+    updateNotes();
+    ctx.fillStyle='#080818'; ctx.fillRect(0,0,W,H);
+    // Draw lanes
+    const lw=W/4;
+    for(let i=0;i<4;i++){
+      ctx.strokeStyle='rgba(255,255,255,.02)';
+      ctx.beginPath(); ctx.moveTo(i*lw,0); ctx.lineTo(i*lw,H); ctx.stroke();
+    }
+    // Draw hit line
+    ctx.strokeStyle='rgba(255,217,61,.3)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(0,hitY); ctx.lineTo(W,hitY); ctx.stroke();
+    // Draw notes
     for(const n of allNotes){
-      if(!n.hit&&!n.missed&&n.y<-20&&n.shouldSpawn(frame))n.y=-20;
-      if(!n.hit&&!n.missed&&n.y>=-20)n.update();
+      if(n.hit||n.missed||n.y<-20)continue;
+      const x=n.lane*lw+lw/2;
+      ctx.fillStyle=n.lane%2===0?'#4d96ff':'#ff6b6b';
+      ctx.beginPath(); ctx.arc(x,n.y,8,0,Math.PI*2); ctx.fill();
     }
-    for(let i=resQ.length-1;i>=0;i--){
-      const n=resQ[i];n.update();n.draw(hitY);
-      if(n.missed||n.hit)resQ.splice(i,1);
-      else if(n.y>hitY+12){allNotes.push(n);resQ.splice(i,1);}
-    }
-    processHits();checkMiss();drawBG();
-    for(const n of allNotes)if(!n.hit&&!n.missed&&n.y>=-20)n.draw(hitY);
-    drawFX();dR();drawProg();
-    document.getElementById('s1').textContent=p1.score;
-    document.getElementById('s2').textContent=p2.score;
-    document.getElementById('c1').textContent=`COMBO ${p1.combo}`;
-    document.getElementById('c2').textContent=`COMBO ${p2.combo}`;
-    document.getElementById('c1').className=p1.combo>10?'tb-combo fire':'tb-combo';
-    document.getElementById('c2').className=p2.combo>10?'tb-combo fire':'tb-combo';
-    checkFin();
-  }else{ctx.fillStyle='#080818';ctx.fillRect(0,0,W,H);}
-  window.animId=requestAnimationFrame(loop);
-}
-loop();
-
-// ===================== EVENTS =====================
-let isHost=false;
-
-document.getElementById('createBtn').addEventListener('click',()=>{
-  window.amHost=true;isHost=true;
-  hostCreate();
-});
-
-document.getElementById('joinBtn').addEventListener('click',()=>{
-  const val=document.getElementById('roomInput').value.trim();
-  // If we're host waiting for answer, treat as confirmAnswer
-  if(window.waitingForAnswer&&val.length>50){
-    confirmAnswer();return;
-  }
-  window.amHost=false;isHost=false;
-  guestJoin();
-});
-
-document.getElementById('codeCopyBtn').addEventListener('click',()=>{
-  const ta=document.getElementById('codeText');
-  ta.select();
-  let ok=false;
-  try{ok=document.execCommand('copy');}catch(e){}
-  if(!ok){try{navigator.clipboard.writeText(ta.value).then(()=>ok=true).catch(()=>{});}catch(e){}}
-  document.getElementById('codeCopyBtn').textContent='✅ 已复制';
-  document.getElementById('codeHint').textContent='已复制！请发送给好友';
-  
-  // If host, show step 2 guidance
-  if(window.amHost){
-    setStep(2);
-    document.getElementById('caLabel').textContent='📥 好友发回了回应码？';
-    document.getElementById('codeHint').textContent='将好友发回的回应码粘贴到上方输入框，然后点确认';
-    document.getElementById('roomInput').value='';
-    document.getElementById('roomInput').placeholder='粘贴好友的回应码';
-    document.getElementById('codeConfirmBtn').style.display='';
-    document.getElementById('codeConfirmBtn').textContent='✅ 已粘贴？点击确认连接';
+    // Update scores
+    $('s1').textContent=p1.score;
+    $('s2').textContent=p2.score;
+    $('c1').textContent='COMBO '+p1.combo;
+    $('c2').textContent='COMBO '+p2.combo;
   }else{
-    // Guest: after copying answer, wait for connection
-    setStep(2);
-    document.getElementById('caLabel').textContent='⏳ 等待主机确认...';
-    document.getElementById('codeHint').textContent='回应码已发给主机，等待连接中...';
-    setTimeout(()=>{
-      if(pc&&(pc.connectionState==='connected'||pc.connectionState==='connecting')){
-        document.getElementById('codeHint').textContent='✅ 连接已建立！';
-        setTimeout(()=>{
-          if(dc&&dc.readyState==='open'){
-            document.getElementById('lobby').classList.add('hidden');
-            document.getElementById('gameArea').classList.add('show');
-            setTimeout(resizeCanvas,50);
-          }
-        },800);
-      }
-    },1500);
+    ctx.fillStyle='#080818'; ctx.fillRect(0,0,W,H);
   }
-  setTimeout(()=>{document.getElementById('codeCopyBtn').textContent='📋 复制';},3000);
+  animId=requestAnimationFrame(loop);
+}
+resize(); setupTZ(); loop();
+
+// ===== Button events =====
+$('createBtn').addEventListener('click',()=>{ createRoom(); });
+$('joinBtn').addEventListener('click',()=>{ joinRoom(); });
+$('copyBtn').addEventListener('click',()=>{
+  const ta=$('codeText');
+  ta.select(); ta.setSelectionRange(0,99999);
+  try{ document.execCommand('copy'); }catch(e){}
+  $('copyBtn').textContent='✅ 已复制';
+  if(isHost){
+    stepShow(2);
+    hint('📥 好友发回了回应码？粘贴到输入框');
+    $('roomInput').value=''; $('roomInput').placeholder='粘贴好友的回应码';
+    $('confirmBtn').style.display='';
+    $('confirmBtn').textContent='✅ 确认连接';
+  }else{
+    stepShow(2);
+    hint('✅ 回应码已发送，等待连接...');
+  }
+  setTimeout(()=>{ $('copyBtn').textContent='📋 复制'; },3000);
 });
-
-document.getElementById('codeConfirmBtn').addEventListener('click',confirmAnswer);
-
-document.querySelectorAll('.diff-btn').forEach(b=>{
+$('confirmBtn').addEventListener('click',()=>{ confirmAnswer(); });
+$('diffGroup').querySelectorAll('.diff-btn').forEach(b=>{
   b.addEventListener('click',()=>{
-    document.querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('act'));
-    b.classList.add('act');diff=b.dataset.d;
-    document.getElementById('lobbyStatus').textContent=`难度: ${({easy:'🌱简单',normal:'🔥普通',hard:'💀困难'})[diff]}`;
+    $('diffGroup').querySelectorAll('.diff-btn').forEach(x=>x.classList.remove('act'));
+    b.classList.add('act'); diff=b.dataset.d;
+    status('难度: '+({easy:'🌱简单',normal:'🔥普通',hard:'💀困难'})[diff]);
   });
 });
-
-document.getElementById('resReplay').addEventListener('click',()=>{
-  document.getElementById('resultPanel').classList.remove('show');
+$('resReplay').addEventListener('click',()=>{
+  $('resultPanel').classList.remove('show');
   if(dc&&dc.readyState==='open'){
     seed=Math.floor(Math.random()*999999)+1;
-    sendMsg({type:'start',seed,diff});
-    initG();
+    dc.send(JSON.stringify({type:'start',seed,diff}));
+    initGame();
   }
 });
-document.getElementById('resMenu').addEventListener('click',()=>{
-  document.getElementById('resultPanel').classList.remove('show');
-  document.getElementById('gameArea').classList.remove('show');
-  document.getElementById('lobby').classList.remove('hidden');
-  document.getElementById('codeArea').classList.remove('show');
-  if(pc){pc.close();pc=null;dc=null;}
-  running=false;window.waitingForAnswer=false;window.amHost=undefined;
+$('resMenu').addEventListener('click',()=>{
+  $('resultPanel').classList.remove('show');
+  $('gameArea').classList.remove('show');
+  $('lobby').classList.remove('hidden');
+  $('codeArea').classList.remove('show');
+  $('roomInput').value=''; $('roomInput').placeholder='房间号 / 粘贴码';
+  waitingAnswer=false; amHost=false; isHost=false; running=false;
+  if(pc){ try{pc.close();}catch(e){} pc=null; dc=null; }
 });
 </script>
 </body>
