@@ -103,6 +103,29 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
 .res-detail{font-size:11px;color:#555;line-height:1.6;margin-bottom:14px;text-align:center;}
 .result .btn-row{display:flex;gap:8px;}
 
+/* Code area */
+.code-area{display:none;margin-top:10px;}
+.code-area.show{display:block;}
+.step-guide{display:flex;gap:4px;margin-bottom:8px;justify-content:center;}
+.step{padding:4px 8px;border-radius:6px;font-size:10px;background:rgba(255,255,255,0.03);color:#555;font-weight:600;}
+.step.active{background:rgba(77,150,255,0.1);color:#4d96ff;}
+.step.done{background:rgba(107,203,119,0.1);color:#6bcb77;}
+.ca-label{font-size:11px;color:#ffd93d;margin-bottom:6px;text-align:center;font-weight:600;}
+.code-box{display:flex;gap:6px;margin-bottom:6px;}
+.code-box textarea{
+  flex:1;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.03);color:#ccc;font-size:10px;font-family:monospace;
+  outline:none;resize:none;word-break:break-all;line-height:1.5;
+}
+.copy-btn{
+  padding:8px 14px;border:none;border-radius:8px;background:rgba(255,217,61,0.1);
+  color:#ffd93d;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;
+  transition:all 0.2s;min-width:60px;
+}
+.copy-btn:active{transform:scale(0.95);background:rgba(255,217,61,0.2);}
+.code-hint{font-size:10px;color:#555;text-align:center;margin-bottom:6px;}
+.confirm-btn{width:100%;padding:10px;font-size:13px;}
+
 @media(max-width:500px){
 .lobby-title{font-size:22px;}
 .lobby-card{padding:14px 16px;max-width:300px;}
@@ -131,14 +154,20 @@ background:rgba(8,8,24,.96);z-index:25;padding:20px;backdrop-filter:blur(10px);}
     </div>
     <div class="lobby-status" id="lobbyStatus">选择难度，创建或加入房间</div>
     
-    <!-- Code display / input area for manual WebRTC -->
+    <!-- Step-by-step connection guide -->
     <div class="code-area" id="codeArea">
-      <div class="ca-label" id="caLabel">📋 复制下面的连接码发给好友</div>
-      <textarea id="codeText" readonly onclick="this.select()" placeholder="连接码..."></textarea>
-      <div class="lobby-row" style="margin-top:4px;">
-        <button class="lobby-btn sec small" id="codeCopyBtn">📋 复制</button>
-        <button class="lobby-btn sec small" id="codeConfirmBtn" style="display:none;">✅ 确认连接</button>
+      <div class="step-guide" id="stepGuide">
+        <div class="step step1" id="step1">① 复制下方连接码</div>
+        <div class="step step2" id="step2">② 等待好友回应</div>
+        <div class="step step3" id="step3">③ 粘贴回应码，点击确认</div>
       </div>
+      <div class="ca-label" id="caLabel">📋 复制下面的连接码，发给好友</div>
+      <div class="code-box" id="codeBox">
+        <textarea id="codeText" readonly onclick="this.select()" placeholder="连接码..." rows="3"></textarea>
+        <button class="copy-btn" id="codeCopyBtn">📋 复制</button>
+      </div>
+      <div class="code-hint" id="codeHint">发送给好友后，等待对方发回回应码</div>
+      <button class="lobby-btn pri confirm-btn" id="codeConfirmBtn" style="display:none;">✅ 好友发回了？点击确认连接</button>
     </div>
   </div>
 </div>
@@ -328,6 +357,13 @@ const ICE={iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.googl
 
 function setStatus(t){document.getElementById('lobbyStatus').textContent=t;}
 
+function setStep(n){
+  for(let i=1;i<=3;i++){
+    const el=document.getElementById('step'+i);
+    el.className='step step'+i+(i===n?' active':'')+(i<n?' done':'');
+  }
+}
+
 // Host flow: create offer -> show code -> wait for answer
 async function hostCreate(){
   setStatus('⏳ 初始化...');
@@ -344,16 +380,15 @@ async function hostCreate(){
       else pc.onicegatheringstatechange=()=>pc.iceGatheringState==='complete'&&r();});
     
     const code=btoa(JSON.stringify(pc.localDescription));
-    // Show code
+    // Show code area with step 1
     document.getElementById('codeArea').classList.add('show');
-    document.getElementById('caLabel').textContent='📋 复制下面的连接码，发给好友';
+    setStep(1);
+    document.getElementById('caLabel').textContent='📋 复制下方连接码，发给好友（微信/QQ）';
     document.getElementById('codeText').value=code;
-    document.getElementById('codeText').style.height='80px';
-    document.getElementById('codeCopyBtn').style.display='';
+    document.getElementById('codeCopyBtn').textContent='📋 复制';
     document.getElementById('codeConfirmBtn').style.display='none';
-    document.getElementById('roomInput').value='';
-    document.getElementById('roomInput').placeholder='等待好友发回连接码...';
-    setStatus('✉️ 复制连接码发给好友');
+    document.getElementById('codeHint').textContent='发送给好友后，等待对方发回回应码';
+    setStatus('✉️ 步骤①：复制连接码 → 发给好友');
     
     // Wait for answer paste
     window.waitingForAnswer=true;
@@ -381,37 +416,39 @@ async function guestJoin(){
     const code=btoa(JSON.stringify(pc.localDescription));
     // Show answer code
     document.getElementById('codeArea').classList.add('show');
-    document.getElementById('caLabel').textContent='📋 复制下面的回应码，发回给好友';
+    setStep(1);
+    document.getElementById('caLabel').textContent='📋 复制下方回应码，发回给好友';
     document.getElementById('codeText').value=code;
-    document.getElementById('codeText').style.height='80px';
-    document.getElementById('codeCopyBtn').style.display='';
+    document.getElementById('codeCopyBtn').textContent='📋 复制';
     document.getElementById('codeConfirmBtn').style.display='none';
-    document.getElementById('roomInput').value='';
-    document.getElementById('roomInput').placeholder='粘贴好友的连接码';
-    setStatus('✅ 已连接！请复制回应码发给好友');
+    document.getElementById('codeHint').textContent='发送给好友后，等待连接建立...';
+    setStatus('✅ 步骤②：复制回应码 → 发回给好友');
     
     // Auto resolve after a moment
-    setTimeout(()=>{if(dc&&dc.readyState==='open'){/* already connected */}},1000);
+    setTimeout(()=>{if(dc&&dc.readyState==='open'){/* already connected */}},2000);
   }catch(e){setStatus('❌ 连接失败: '+e.message);}
 }
 
-// Host: paste guest's answer
+// Host: paste guest's answer and confirm
 async function confirmAnswer(){
   const input=document.getElementById('roomInput').value.trim();
   if(!input){setStatus('⚠️ 请粘贴好友发回的回应码');return;}
+  document.getElementById('codeConfirmBtn').textContent='⏳ 连接中...';
   try{
     const answer=JSON.parse(atob(input));
     await pc.setRemoteDescription(answer);
     setStatus('✅ 连接建立中...');
-    document.getElementById('codeArea').classList.remove('show');
-    document.getElementById('roomInput').placeholder='房间号 / 粘贴码';
-  }catch(e){setStatus('❌ 回应码无效: '+e.message);}
+    setStep(3);
+    document.getElementById('codeConfirmBtn').textContent='✅ 好友确认中...';
+    // Wait for dc to open - onConnected will handle it
+  }catch(e){
+    setStatus('❌ 回应码无效: '+e.message);
+    document.getElementById('codeConfirmBtn').textContent='✅ 好友发回了？点击确认连接';
+  }
 }
 
 function onConnected(){
-  mySide=pc? (dc&&dc.label==='game' && document.getElementById('createBtn').style.display!=='none' ? 'p1':'p2'):'p2';
-  // Determine who is host
-  if(window.amHost===undefined)window.amHost=!!pc&&pc.localDescription&&pc.localDescription.type==='offer';
+  window.amHost=window.amHost||(pc&&pc.localDescription&&pc.localDescription.type==='offer');
   mySide=window.amHost?'p1':'p2';
   partner=mySide==='p1'?'p2':'p1';
   
@@ -420,7 +457,7 @@ function onConnected(){
   document.getElementById('gameArea').classList.add('show');
   setTimeout(resizeCanvas,50);
   
-  // Start game
+  // Start game - host sends start signal
   if(window.amHost){
     seed=Math.floor(Math.random()*999999)+1;
     dc.send(JSON.stringify({type:'start',seed,diff}));
@@ -661,37 +698,52 @@ document.getElementById('createBtn').addEventListener('click',()=>{
 });
 
 document.getElementById('joinBtn').addEventListener('click',()=>{
-  window.amHost=false;isHost=false;
-  // Check if we have code in input - could be answer for host or offer for guest
   const val=document.getElementById('roomInput').value.trim();
-  if(val&&val.length>50&&window.waitingForAnswer){
+  // If we're host waiting for answer, treat as confirmAnswer
+  if(window.waitingForAnswer&&val.length>50){
     confirmAnswer();return;
   }
+  window.amHost=false;isHost=false;
   guestJoin();
 });
 
 document.getElementById('codeCopyBtn').addEventListener('click',()=>{
   const ta=document.getElementById('codeText');
-  ta.select();try{document.execCommand('copy');}catch(e){navigator.clipboard.writeText(ta.value).catch(()=>{});}
+  ta.select();
+  let ok=false;
+  try{ok=document.execCommand('copy');}catch(e){}
+  if(!ok){try{navigator.clipboard.writeText(ta.value).then(()=>ok=true).catch(()=>{});}catch(e){}}
   document.getElementById('codeCopyBtn').textContent='✅ 已复制';
-  setTimeout(()=>{document.getElementById('codeCopyBtn').textContent='📋 复制';},2000);
+  document.getElementById('codeHint').textContent='已复制！请发送给好友';
   
-  // If host, now show the confirm button for pasting answer
+  // If host, show step 2 guidance
   if(window.amHost){
-    document.getElementById('caLabel').textContent='📥 好友发回了回应码？粘贴到上方输入框，点击确认';
+    setStep(2);
+    document.getElementById('caLabel').textContent='📥 好友发回了回应码？';
+    document.getElementById('codeHint').textContent='将好友发回的回应码粘贴到上方输入框，然后点确认';
+    document.getElementById('roomInput').value='';
     document.getElementById('roomInput').placeholder='粘贴好友的回应码';
     document.getElementById('codeConfirmBtn').style.display='';
-    document.getElementById('codeConfirmBtn').onclick=confirmAnswer;
+    document.getElementById('codeConfirmBtn').textContent='✅ 已粘贴？点击确认连接';
   }else{
-    // Guest: connection should be established
+    // Guest: after copying answer, wait for connection
+    setStep(2);
+    document.getElementById('caLabel').textContent='⏳ 等待主机确认...';
+    document.getElementById('codeHint').textContent='回应码已发给主机，等待连接中...';
     setTimeout(()=>{
-      if(pc&&pc.connectionState==='connected'){
-        document.getElementById('lobby').classList.add('hidden');
-        document.getElementById('gameArea').classList.add('show');
-        setTimeout(resizeCanvas,50);
+      if(pc&&(pc.connectionState==='connected'||pc.connectionState==='connecting')){
+        document.getElementById('codeHint').textContent='✅ 连接已建立！';
+        setTimeout(()=>{
+          if(dc&&dc.readyState==='open'){
+            document.getElementById('lobby').classList.add('hidden');
+            document.getElementById('gameArea').classList.add('show');
+            setTimeout(resizeCanvas,50);
+          }
+        },800);
       }
-    },2000);
+    },1500);
   }
+  setTimeout(()=>{document.getElementById('codeCopyBtn').textContent='📋 复制';},3000);
 });
 
 document.getElementById('codeConfirmBtn').addEventListener('click',confirmAnswer);
