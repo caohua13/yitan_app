@@ -19,17 +19,21 @@ html,body{
     display:flex;flex-direction:column;
     position:relative;overflow:hidden;
 }
-/* Rotate提示 */
+/* Rotate提示 - JS控制显隐 */
 .rotate-hint{
     display:none;position:fixed;top:0;left:0;right:0;bottom:0;
     background:#080818;z-index:999;
     justify-content:center;align-items:center;flex-direction:column;
     text-align:center;padding:20px;
 }
+.rotate-hint.show{display:flex;}
 .rotate-hint .icon{font-size:60px;animation:rotateIcon 2s ease infinite;}
 @keyframes rotateIcon{0%{transform:rotate(0)}50%{transform:rotate(90deg)}100%{transform:rotate(0)}}
 .rotate-hint p{color:#888;margin-top:16px;font-size:14px;}
-@media(orientation:portrait){.rotate-hint{display:flex;}}
+.rotate-hint .btn-continue{
+    margin-top:20px;padding:12px 30px;border:none;border-radius:12px;
+    background:rgba(255,255,255,0.08);color:#aaa;font-size:14px;cursor:pointer;
+}
 
 /* ====== LOBBY SCREEN ====== */
 .lobby{
@@ -174,7 +178,8 @@ html,body{
 <body>
 <div class="rotate-hint">
     <div class="icon">📱</div>
-    <p>请横屏使用<br><span style="font-size:12px;color:#555;">旋转手机到横向模式</span></p>
+    <p>请横屏使用<br><span style="font-size:12px;color:#555;">旋转手机到横向模式体验更佳</span></p>
+    <button class="btn-continue" id="forceLandscapeBtn">🔓 强制继续（竖屏）</button>
 </div>
 
 <div class="app">
@@ -243,6 +248,50 @@ html,body{
 <script>
 "use strict";
 // ==========================================
+// ORIENTATION DETECTION
+// ==========================================
+const rotateHint = document.getElementById('rotate-hint') || (()=>{
+    const el = document.querySelector('.rotate-hint');
+    if(el) el.id = 'rotate-hint';
+    return el;
+})();
+
+function checkOrientation(){
+    const isLandscape = window.innerWidth > window.innerHeight;
+    if(rotateHint){
+        if(isLandscape){
+            rotateHint.classList.remove('show');
+            // Try to lock orientation
+            try{ if(screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(()=>{}); }catch(e){}
+        } else {
+            rotateHint.classList.add('show');
+        }
+    }
+    // Always resize canvas regardless
+    resizeCanvas();
+}
+
+// Force set orientation
+document.getElementById('forceLandscapeBtn')?.addEventListener('click', ()=>{
+    if(rotateHint) rotateHint.classList.remove('show');
+    resizeCanvas();
+});
+
+// Detect on resize and load
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('load', ()=>{
+    checkOrientation();
+    // Extra check after a moment
+    setTimeout(checkOrientation, 500);
+    setTimeout(checkOrientation, 1500);
+});
+
+// Also check on orientation change
+if(window.screen && screen.orientation){
+    screen.orientation.addEventListener('change', checkOrientation);
+}
+
+// ==========================================
 // CANVAS SETUP (responsive)
 // ==========================================
 const canvas=document.getElementById('gc');
@@ -251,12 +300,32 @@ let W,H;
 
 function resizeCanvas(){
     const wrap=canvas.parentElement;
+    if(!wrap)return;
     const r=wrap.getBoundingClientRect();
-    canvas.width=r.width*window.devicePixelRatio||r.width;
-    canvas.height=r.height*window.devicePixelRatio||r.height;
-    W=canvas.width;H=canvas.height;
+    const dpr=Math.min(window.devicePixelRatio||1, 2);
+    canvas.width=r.width*dpr;
+    canvas.height=r.height*dpr;
+    canvas.style.width=r.width+'px';
+    canvas.style.height=r.height+'px';
+    W=canvas.width;
+    H=canvas.height;
+    hitY=H*0.78;
 }
-window.addEventListener('resize',resizeCanvas);
+// Refresh canvas size on any size change
+window.addEventListener('resize', ()=>{
+    resizeCanvas();
+    // Re-draw on resize
+    if(!running){
+        ctx.fillStyle='#080818';ctx.fillRect(0,0,W,H);
+    }
+});
+// Also resize when game area becomes visible
+const origShow = document.getElementById('gameArea').classList.contains;
+const _origAdd = document.getElementById('gameArea').classList.add;
+document.getElementById('gameArea').classList.add = function(){
+    _origAdd.apply(this, arguments);
+    if(arguments[0]==='show') setTimeout(resizeCanvas, 50);
+};
 resizeCanvas();
 
 // ==========================================
