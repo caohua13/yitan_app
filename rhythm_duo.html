@@ -104,26 +104,27 @@ html,body{
 /* Touch zones - Phigros style bottom zones */
 .touch-zones{
     position:absolute;bottom:0;left:0;right:0;
-    height:25%;pointer-events:none;z-index:3;
+    height:28%;z-index:10;
 }
 .tz-row{
-    display:flex;height:100%;
+    display:flex;height:100%;width:100%;
 }
 .tz-half{
-    flex:1;display:flex;position:relative;
+    width:50%;display:flex;position:relative;
 }
 .tz-lane{
     flex:1;position:relative;
-    border-left:1px solid rgba(255,255,255,0.03);
+    cursor:pointer;
+    border-left:1px solid rgba(255,255,255,0.05);
 }
 .tz-lane:first-child{border-left:none;}
-.tz-lane.active-p1{background:rgba(77,150,255,0.06);}
-.tz-lane.active-p2{background:rgba(255,107,107,0.06);}
+.tz-lane.active-p1{background:rgba(77,150,255,0.12);}
+.tz-lane.active-p2{background:rgba(255,107,107,0.12);}
 .tz-label{
-    position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-    font-size:10px;font-weight:600;opacity:0.15;pointer-events:none;
+    position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+    font-size:11px;font-weight:700;opacity:0.2;pointer-events:none;
 }
-.tz-lane .tz-label{color:#4d96ff;}
+.tz-half.p1 .tz-lane .tz-label{color:#4d96ff;}
 .tz-half.p2 .tz-lane .tz-label{color:#ff6b6b;}
 
 /* ====== RESULT ====== */
@@ -404,14 +405,17 @@ class Note{
         ctx.restore();
     }
     laneX(){
-        const totalW=W*0.85;
-        const startX=W*0.075;
-        const laneW=totalW/4;
-        const half=this.player==='p1'?W/4:W*3/4;
-        const offset=this.player==='p1'?0:0;
-        // P1 lanes on left half, P2 on right half
-        const baseX=this.player==='p1'?W*0.05:W*0.5;
-        return baseX+this.lane*laneW+laneW/2;
+        // P1 occupies left 45%, P2 occupies right 45%
+        const startX=this.player==='p1'?W*0.05:W*0.52;
+        const laneW=W*0.43/4;
+        return startX+this.lane*laneW+laneW/2;
+    }
+    getTravelTime(){
+        // How many frames for note to travel from top to hitY
+        return Math.round((hitY + 30) / this.speed);
+    }
+    shouldSpawn(frame){
+        return frame >= this.bf - this.getTravelTime();
     }
 }
 
@@ -575,20 +579,18 @@ function buildZones(){
         row.appendChild(half);
     }
     
-    // Bind touch/click
+    // Bind touch + mouse events (both mobile and desktop)
     document.querySelectorAll('.tz-lane').forEach(el=>{
         const k=el.dataset.key;
-        el.addEventListener('touchstart',e=>{
-            e.preventDefault();keys[k]=true;pressed[k]=true;
-            el.classList.add(el.dataset.side==='p1'?'active-p1':'active-p2');
-        },{passive:false});
-        el.addEventListener('touchend',e=>{
-            e.preventDefault();keys[k]=false;
-            el.classList.remove('active-p1','active-p2');
-        },{passive:false});
-        el.addEventListener('touchcancel',e=>{
-            keys[k]=false;el.classList.remove('active-p1','active-p2');
-        });
+        const sideClass=el.dataset.side==='p1'?'active-p1':'active-p2';
+        const act=()=>{keys[k]=true;pressed[k]=true;el.classList.add(sideClass);};
+        const deact=()=>{keys[k]=false;el.classList.remove(sideClass);};
+        el.addEventListener('touchstart',e=>{e.preventDefault();act();},{passive:false});
+        el.addEventListener('touchend',e=>{e.preventDefault();deact();},{passive:false});
+        el.addEventListener('touchcancel',deact);
+        el.addEventListener('mousedown',act);
+        el.addEventListener('mouseup',deact);
+        el.addEventListener('mouseleave',deact);
     });
 }
 buildZones();
@@ -606,6 +608,7 @@ document.addEventListener('keyup',e=>{const k=e.key.toLowerCase();keys[k]=false;
 const PDIST=12,GDIST=25,ODIST=42;
 
 function processHits(){
+    if(!mySide){return;} // safety: no side assigned yet
     const my=mySide==='p1'?P1_KEYS:P2_KEYS;
     const mc=mySide==='p1'?LANE_COLORS_P1:LANE_COLORS_P2;
     const md=mySide==='p1'?p1:p2;
@@ -664,9 +667,9 @@ function drawBG(){
     ctx.beginPath();ctx.moveTo(sx,0);ctx.lineTo(sx,H);ctx.stroke();
     ctx.setLineDash([]);
     
-    // Lanes
+    // Lanes - match Note.laneX() positions
+    const lw=W*0.43/4;
     for(let i=0;i<4;i++){
-        const lw=W*0.45/4;
         // P1
         const x1=W*0.05+i*lw;
         ctx.fillStyle='rgba(255,255,255,0.01)';
@@ -674,7 +677,7 @@ function drawBG(){
         ctx.strokeStyle='rgba(255,255,255,0.02)';ctx.lineWidth=0.5;
         ctx.strokeRect(x1,0,lw,H);
         // P2
-        const x2=W*0.5+i*lw;
+        const x2=W*0.52+i*lw;
         ctx.fillRect(x2,0,lw,H);
         ctx.strokeRect(x2,0,lw,H);
     }
@@ -791,9 +794,9 @@ function loop(){
     }else if(running){
         frame++;
         
-        // Spawn & update
+        // Spawn & update notes
         for(const n of allNotes){
-            if(!n.hit&&!n.missed&&n.y<-50&&frame>=n.bf-40)n.y=-20;
+            if(!n.hit&&!n.missed&&n.y<-20&&n.shouldSpawn(frame))n.y=-20;
             if(!n.hit&&!n.missed&&n.y>=-20)n.update();
         }
         
